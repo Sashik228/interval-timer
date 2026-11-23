@@ -1,18 +1,18 @@
-const V = 'interval-timer-v4';
+const V = 'interval-timer-v5';
 const FONTS = 'interval-timer-fonts';
 const CORE = [
   './',
   './index.html',
   './manifest.webmanifest',
-  './icons/icon-192.png',
-  './icons/icon-512.png',
-  './icons/apple-touch-icon.png',
-  './fonts/inter-tight-cyrillic-wght-normal.woff2',
-  './fonts/inter-tight-latin-wght-normal.woff2'
+  './icon-192.png',
+  './icon-512.png',
+  './apple-touch-icon.png',
+  './font-cyrillic.woff2',
+  './font-latin.woff2'
 ];
 
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(V).then(c => c.addAll(CORE)).then(() => self.skipWaiting()));
+  e.waitUntil(caches.open(V).then(c => Promise.all(CORE.map(u => c.add(u).catch(() => {})))).then(() => self.skipWaiting()));
 });
 
 self.addEventListener('activate', e => {
